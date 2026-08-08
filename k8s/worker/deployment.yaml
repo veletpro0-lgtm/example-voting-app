@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: worker
+  namespace: voting-app
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: worker
+
+  template:
+    metadata:
+      labels:
+        app: worker
+
+    spec:
+      containers:
+        - name: worker
+          image: voting-worker:local
+          imagePullPolicy: Never
+
+          envFrom:
+            - configMapRef:
+                name: app-config
+
+            - secretRef:
+                name: postgres-secret
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - grep -aq "Worker.dll" /proc/1/cmdline
+            initialDelaySeconds: 10
+            periodSeconds: 10
