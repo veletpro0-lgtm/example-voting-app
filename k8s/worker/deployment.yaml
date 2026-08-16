@@ -18,25 +18,27 @@ spec:
         app: worker
 
     spec:
+      imagePullSecrets:
+        - name: registry-secret
+
       containers:
         - name: worker
-          image: voting-worker:local
-          imagePullPolicy: Never
+          image: yamanradan/voting:worker-v1
+          imagePullPolicy: IfNotPresent
 
           envFrom:
             - configMapRef:
                 name: app-config
-
             - secretRef:
                 name: postgres-secret
 
           resources:
             requests:
-              cpu: "100m"
-              memory: "128Mi"
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: "500m"
-              memory: "256Mi"
+              cpu: 500m
+              memory: 256Mi
 
           livenessProbe:
             exec:

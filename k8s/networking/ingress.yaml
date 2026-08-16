@@ -9,7 +9,7 @@ spec:
   ingressClassName: nginx
 
   rules:
-    - host: vote.localhost
+    - host: vote.voting.test
       http:
         paths:
           - path: /
@@ -20,7 +20,7 @@ spec:
                 port:
                   number: 80
 
-    - host: result.localhost
+    - host: result.voting.test
       http:
         paths:
           - path: /

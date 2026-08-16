@@ -18,14 +18,13 @@ spec:
         app: vote
 
     spec:
+      imagePullSecrets:
+        - name: registry-secret
       containers:
         - name: vote
-          image: voting-vote:local
-          imagePullPolicy: Never
+          image: yamanradan/voting:vote-v1
+          imagePullPolicy: IfNotPresent
 
-          ports:
-            - name: http
-              containerPort: 80
 
           envFrom:
             - configMapRef:
@@ -33,11 +32,11 @@ spec:
 
           resources:
             requests:
-              cpu: "100m"
-              memory: "64Mi"
+              cpu: 100m
+              memory: 64Mi
             limits:
-              cpu: "300m"
-              memory: "256Mi"
+              cpu: 300m
+              memory: 256Mi
 
           readinessProbe:
             httpGet:

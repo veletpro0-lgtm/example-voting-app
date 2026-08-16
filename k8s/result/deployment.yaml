@@ -18,29 +18,27 @@ spec:
         app: result
 
     spec:
+      imagePullSecrets:
+        - name: registry-secret
+
       containers:
         - name: result
-          image: voting-result:local
-          imagePullPolicy: Never
-
-          ports:
-            - name: http
-              containerPort: 80
+          image: yamanradan/voting:result-v1
+          imagePullPolicy: IfNotPresent
 
           envFrom:
             - configMapRef:
                 name: app-config
-
             - secretRef:
                 name: postgres-secret
 
           resources:
             requests:
-              cpu: "100m"
-              memory: "64Mi"
+              cpu: 100m
+              memory: 64Mi
             limits:
-              cpu: "300m"
-              memory: "256Mi"
+              cpu: 300m
+              memory: 256Mi
 
           readinessProbe:
             httpGet:

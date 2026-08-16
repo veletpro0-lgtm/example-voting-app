@@ -23,21 +23,17 @@ spec:
         - name: postgres
           image: postgres:15-alpine
 
-          ports:
-            - containerPort: 5432
-              name: postgres
-
           envFrom:
             - secretRef:
                 name: postgres-secret
 
           resources:
             requests:
-              cpu: "100m"
-              memory: "128Mi"
+              cpu: 100m
+              memory: 128Mi
             limits:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: 500m
+              memory: 512Mi
 
           readinessProbe:
             exec:
@@ -64,12 +60,9 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: db-data
-
       spec:
         accessModes:
           - ReadWriteOnce
-
         resources:
           requests:
             storage: 1Gi
-

@@ -22,17 +22,13 @@ spec:
         - name: redis
           image: redis:alpine
 
-          ports:
-            - name: redis
-              containerPort: 6379
-
           resources:
             requests:
-              cpu: "50m"
-              memory: "64Mi"
+              cpu: 50m
+              memory: 64Mi
             limits:
-              cpu: "200m"
-              memory: "256Mi"
+              cpu: 200m
+              memory: 256Mi
 
           readinessProbe:
             exec:
@@ -49,4 +45,3 @@ spec:
                 - ping
             initialDelaySeconds: 10
             periodSeconds: 10
-
